@@ -21,14 +21,16 @@ My blogs
 
 <section id = "latest-posts">
     <h2>My latest posts</h2>
-    <ul>
+    <ul> 
+        {%for post in posts%}
         {%include "blog/include/post.html"%}
+        {%endfor%}
     </ul>
-</section id = "about">
+</section>
+<section id = "about">
     <h2>What do I do </h2>
     <p>I am a Btech student and a passionate 2D animatior and digital artist</p>
     <p>hello</p>
-<section>
-
 </section>
+
 {%endblock%}
