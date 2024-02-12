@@ -1,0 +1,11 @@
+{%extends "book_outlet/base.html"%}
+{%block title%} 
+Home Page
+{%endblock%}
+{%block content%}
+<ul>
+    {%for book in books %}
+    <li> <a href="{% url "book-detail" book.id%}"><b>{{book.title}}</b></a> by <b>{{book.author}}</b>, rating:<b>{{book.rating}}</b></li>
+    {%endfor%}
+</ul>
+{%endblock%}
