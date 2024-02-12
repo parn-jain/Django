@@ -5,7 +5,10 @@ Home Page
 {%block content%}
 <ul>
     {%for book in books %}
-    <li> <a href="{% url "book-detail" book.id%}"><b>{{book.title}}</b></a> by <b>{{book.author}}</b>, rating:<b>{{book.rating}}</b></li>
+    <li> <a href="{% url "book-detail" book.slug%}"><b>{{book.title}}</b></a> by <b>{{book.author}}</b>, rating:<b>{{book.rating}}</b></li>
     {%endfor%}
 </ul>
+
+<p>total no of books {{total_books}}</p>
+<p>average rating {{average_rating.rating__avg}}</p>
 {%endblock%}
