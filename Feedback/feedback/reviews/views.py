@@ -113,19 +113,43 @@ class ReviewsListView(ListView):
 
 class SingleReviewView(TemplateView):
     template_name = "reviews/single-review.html"
- 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         review_id = kwargs["id"]
         selected_review = Review.objects.get(pk = review_id)      #since <int:"id" we use id here
         context["ididid"] = review_id
         context["review"] = selected_review 
+        # loaded_review = self.object
+        requests = self.request
+        favourite_id = requests.session["favorite_review"]
+        context["is_favorite"] = favourite_id == selected_review.id
         print(review_id)
         return context
-    
+        
+        
 
-# class SingleReviewView(DetailView):
-#     template_name = "reviews/single-review.html"
-#     model = Review
+    # class SingleReviewView(DetailView):
+    #     template_name = "reviews/single-review.html"
+    #     model = Review
 
-    
+        
+
+# class favView(View):
+#     def post(self,request):
+#         review_id = request.POST['review_id']
+#         # fav_review = Review.objects.get(pk = review_id)
+#         request.session["favorite_review"] = review_id
+#         return HttpResponseRedirect("/reviews/"+review_id)
+
+class favView(View):
+    def post(self,request):
+        review_id = request.POST.get('review_id')  # Using get() to safely get the value or None
+        if review_id:
+            request.session["favorite_review"] = review_id
+            return HttpResponseRedirect("/reviews/" + review_id)
+        else:
+            # Handle the case when 'review_id' is not found in request.POST
+            # You can redirect the user to an error page or do something else
+            return HttpResponseRedirect("/reviews/" + review_id)
+            # return HttpResponse("Error: 'review_id' not found in the request.")
