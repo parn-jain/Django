@@ -122,8 +122,8 @@ class SingleReviewView(TemplateView):
         context["review"] = selected_review 
         # loaded_review = self.object
         requests = self.request
-        favourite_id = requests.session["favorite_review"]
-        context["is_favorite"] = favourite_id == selected_review.id
+        favourite_id = requests.session.get("favorite_review")
+        context["is_favorite"] = favourite_id == str(selected_review.id)
         print(review_id)
         return context
         
@@ -144,12 +144,8 @@ class SingleReviewView(TemplateView):
 
 class favView(View):
     def post(self,request):
-        review_id = request.POST.get('review_id')  # Using get() to safely get the value or None
-        if review_id:
-            request.session["favorite_review"] = review_id
-            return HttpResponseRedirect("/reviews/" + review_id)
-        else:
-            # Handle the case when 'review_id' is not found in request.POST
-            # You can redirect the user to an error page or do something else
-            return HttpResponseRedirect("/reviews/" + review_id)
-            # return HttpResponse("Error: 'review_id' not found in the request.")
+        review_id = request.POST['review_id']
+        # fav_review = Review.objects.get(pk = review_id)
+        request.session["favorite_review"] = review_id
+        return HttpResponseRedirect("/reviews/"+review_id)
+    
