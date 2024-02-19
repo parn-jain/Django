@@ -13,7 +13,7 @@ class Tag(models.Model):
     caption = models.CharField(max_length = 30)
 
     def __str__(self): 
-        return self.caption 
+        return self.caption  
 
 class Post(models.Model):
     title = models.CharField(max_length = 50)
