@@ -10,7 +10,7 @@ class StudentSerializers(serializers.ModelSerializer):
 
 
     def validate(self,data):
-        if data['age']<18:
+        if 'age' in data and data['age']<18:
             raise serializers.ValidationError({'error':"Age is less then 18"})
         
         if data['name']:
